@@ -3,7 +3,7 @@ services:
     image: mysql:9.1
     environment:
     - MYSQL_DATABASE=data-keeper
-    - MYSQL_ROOT_PASSWORD=!T$47EW9HW#s_G.m%,S
+    - MYSQL_ROOT_PASSWORD=data-keeper
     ports:
     - 33060:33060
     - 3306:3306
