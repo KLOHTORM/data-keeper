@@ -37,3 +37,6 @@ bin/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+
+/mysql_data/

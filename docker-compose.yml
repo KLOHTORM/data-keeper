@@ -3,6 +3,15 @@ services:
     image: mysql:9.1
     environment:
     - MYSQL_DATABASE=data-keeper
-    - MYSQL_ROOT_PASSWORD=P4ssword!
+    - MYSQL_ROOT_PASSWORD=!T$47EW9HW#s_G.m%,S
     ports:
-    - 3307:3306
+    - 33060:33060
+    - 3306:3306
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+      - ./mysql_data:/var/lib/mysql
+
+  app:
+    build: .
+    network_mode: host
+    #entrypoint: tail -f /dev/null
