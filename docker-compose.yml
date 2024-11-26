@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:9.1
+    image: mariadb:10.5
     environment:
     - MYSQL_DATABASE=data-keeper
     - MYSQL_ROOT_PASSWORD=data-keeper
