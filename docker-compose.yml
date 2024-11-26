@@ -14,11 +14,20 @@ services:
     networks:
       - app-network
 
-
-#  app:
-#    build: .
-#    network_mode: host
-#    #entrypoint: tail -f /dev/null
+  app:
+    build: .
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=data-keeper
+      - MYSQL_DATABASE=data-keeper
+    ports:
+      - "3000:3000"  # или любой другой порт, который использует ваше приложение
+    depends_on:
+      - mysql  # гарантирует, что сначала будет запущен сервис mysql
+    networks:
+      - app-network
+    restart: always
 
 networks:
   app-network:
