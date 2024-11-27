@@ -1,15 +1,19 @@
 package ru.alpha_complex.data_keeper.service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.ArrayList;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.alpha_complex.data_keeper.domain.Recipe;
 import ru.alpha_complex.data_keeper.domain.RecipeIngredient;
 import ru.alpha_complex.data_keeper.model.RecipeDTO;
+import ru.alpha_complex.data_keeper.model.RecipeWithIngredientsDTO;
 import ru.alpha_complex.data_keeper.repos.RecipeIngredientRepository;
 import ru.alpha_complex.data_keeper.repos.RecipeRepository;
 import ru.alpha_complex.data_keeper.util.NotFoundException;
 import ru.alpha_complex.data_keeper.util.ReferencedWarning;
+
 
 
 @Service
@@ -35,6 +39,35 @@ public class RecipeService {
         return recipeRepository.findById(id)
                 .map(recipe -> mapToDTO(recipe, new RecipeDTO()))
                 .orElseThrow(NotFoundException::new);
+    }
+
+    // Новый метод для получения рецепта с ингредиентами через native SQL
+    public RecipeWithIngredientsDTO getRecipeWithIngredients(final Integer id) {
+        List<Object[]> results = recipeRepository.findRecipeWithIngredientsNative(id);
+
+        if (results.isEmpty()) {
+            throw new NotFoundException();  // Можно создать более подробное исключение
+        }
+
+        // Создаем объект DTO для рецепта с ингредиентами
+        RecipeWithIngredientsDTO recipeWithIngredients = new RecipeWithIngredientsDTO();
+        Object[] firstRow = results.get(0);
+        recipeWithIngredients.setId(((Number) firstRow[0]).longValue());
+        recipeWithIngredients.setName((String) firstRow[1]);
+        recipeWithIngredients.setDescription((String) firstRow[2]);
+
+        List<RecipeWithIngredientsDTO.IngredientDTO> ingredients = new ArrayList<>();
+        for (Object[] row : results) {
+            RecipeWithIngredientsDTO.IngredientDTO ingredientDTO = new RecipeWithIngredientsDTO.IngredientDTO();
+            ingredientDTO.setName((String) row[4]);
+            ingredientDTO.setDescription((String) row[5]);
+            ingredientDTO.setQuantity((BigDecimal) row[6]);
+            ingredientDTO.setUnit((String) row[7]);
+            ingredients.add(ingredientDTO);
+        }
+        recipeWithIngredients.setIngredients(ingredients);
+
+        return recipeWithIngredients;
     }
 
     public Integer create(final RecipeDTO recipeDTO) {

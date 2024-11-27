@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.alpha_complex.data_keeper.model.RecipeDTO;
+import ru.alpha_complex.data_keeper.model.RecipeWithIngredientsDTO;
 import ru.alpha_complex.data_keeper.service.RecipeService;
 import ru.alpha_complex.data_keeper.util.ReferencedException;
 import ru.alpha_complex.data_keeper.util.ReferencedWarning;
@@ -39,6 +40,12 @@ public class RecipeResource {
     public ResponseEntity<RecipeDTO> getRecipe(@PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(recipeService.get(id));
     }
+
+    @GetMapping("/{id}/with-ingredients")
+    public ResponseEntity<RecipeWithIngredientsDTO> getRecipeWithIngredients(@PathVariable Integer id) {
+        return ResponseEntity.ok(recipeService.getRecipeWithIngredients(id));
+    }
+
 
     @PostMapping
     @ApiResponse(responseCode = "201")

@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     url: ${JDBC_DATABASE_URL:jdbc:mysql://mysql:3306/data-keeper?serverTimezone=UTC}
-    username: ${JDBC_DATABASE_USERNAME:root}
+    username: ${JDBC_DATABASE_USERNAME:data-keeper}
     password: ${JDBC_DATABASE_PASSWORD:data-keeper}
     hikari:
       connection-timeout: 30000
