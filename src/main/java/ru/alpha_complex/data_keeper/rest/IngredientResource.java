@@ -2,7 +2,6 @@ package ru.alpha_complex.data_keeper.rest;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
-import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +10,8 @@ import ru.alpha_complex.data_keeper.model.IngredientDTO;
 import ru.alpha_complex.data_keeper.service.IngredientService;
 import ru.alpha_complex.data_keeper.util.ReferencedException;
 import ru.alpha_complex.data_keeper.util.ReferencedWarning;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/ingredients", produces = MediaType.APPLICATION_JSON_VALUE)

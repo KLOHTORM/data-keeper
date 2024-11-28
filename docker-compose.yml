@@ -16,7 +16,6 @@ services:
   app:
     build: .
     environment:
-#      - MYSQL_HOST=mysql
       - JDBC_DATABASE_USERNAME=root
       - JDBC_DATABASE_PASSWORD=data-keeper
       - MYSQL_DATABASE=data-keeper
@@ -31,16 +30,13 @@ services:
 
   web: # Имя сервиса
     build:
-      context: ../web  # Указывает, что Dockerfile находится в текущей директории
-      dockerfile: Dockerfile  # Имя Dockerfile (опционально, если имя - Dockerfile)
+      context: ../web
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"  # Пробрасывает порт 8080 контейнера на 8080 хоста
-#    volumes:
-#      - .:/web  # Связывает локальную директорию с контейнером для разработки
-#      - /web/node_modules  # Исключает node_modules из монтирования (опционально)
     environment:
-      NODE_ENV: production  # Устанавливает переменные окружения
-    command: [ "npm", "run", "serve" ]  # Переопределяет команду запуска (можно не указывать, если в Dockerfile уже есть CMD)
+      NODE_ENV: production
+    command: [ "npm", "run", "serve" ]
     networks:
       - app-network
 
